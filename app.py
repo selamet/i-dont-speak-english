@@ -1,11 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm
+import json
+
+with open("bilgiler/bilgiler.json") as read_file:
+    data = read_file.read()
+
+obj = json.loads(data)
+yol = obj['database_yolu']
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'linuxdegilgnulinux'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///Users/selametsamli/Desktop/i-dont-speak-english/english.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + yol + '/english.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -46,8 +53,16 @@ def login():
             data = User.query.filter_by(username=name, password=passw).first()
             if data is not None:
                 session['logged_in'] = True
-                return 'login'
+                session['username'] = name
+                flash('You were successfully logged in', "success")
+                return redirect(url_for('home'))
             else:
                 return 'Dont Login'
         except:
             return "Dont Login"
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
