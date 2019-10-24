@@ -10,6 +10,11 @@ class RegisterForm(FlaskForm):
                                                                                             message="Parolalar uyuşmuyor")])
     confirm = PasswordField("Parola Doğrula")
 
+
 class LoginForm(FlaskForm):
     username = StringField("Kullanıcı Adı")
     password = PasswordField("Parola")
+
+
+class InputForm(FlaskForm):
+    word = StringField("Your Guess")

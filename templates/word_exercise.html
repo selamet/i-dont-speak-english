@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "include/formhelpers.html" import render_field %}
+
+{% block icerik %}
+
+    <div style="margin: 10%;">
+        {% for key, value in word_dict.items() %}
+            <h6>
+                Key: {{ key|e }}
+                <br>
+                Value: {{ value|e }}
+            </h6>
+        {% endfor %}
+
+        <hr>
+        <hr>
+        <br>
+        
+        
+
+        {{ csrf_token }}
+        <form method="POST">
+            {{ render_field(form.word, class="form-control") }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}

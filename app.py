@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from forms import LoginForm
+from forms import LoginForm, InputForm
 import json
+
+from word_exercise import word_exercise
 
 with open("bilgiler/bilgiler.json") as read_file:
     data = read_file.read()
@@ -58,7 +60,7 @@ def login():
                 return redirect(url_for('home'))
             else:
                 return 'Dont Login'
-        except:
+        except Exception:
             return "Dont Login"
 
 
@@ -66,3 +68,18 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("home"))
+
+
+@app.route("/word_exercise", methods=['GET', 'POST'])
+def word_exercise_url():
+    form = InputForm()
+    word_dict = word_exercise()
+
+    if request.method == 'GET':
+        return render_template(
+            "word_exercise.html",
+            word_dict=word_dict,
+            form=form
+            )
+    else:
+        pass
