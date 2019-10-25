@@ -22,7 +22,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
@@ -109,3 +108,10 @@ def add_post():
     except KeyError:
         flash('Buraya erişmek için yetkili olmalısınız. ', 'info')
         return redirect(url_for('home'))
+
+
+@app.route("/post_list")
+def post_list():
+    posts = Posts.query.all()
+
+    return render_template('post/post_list.html', posts=posts)

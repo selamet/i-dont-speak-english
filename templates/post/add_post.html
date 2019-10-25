@@ -7,23 +7,17 @@
 {% endblock %}
 
 {% block icerik %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="col-lg-8 offset-lg-2">
-                <h3 class="page-header">Post Oluştur</h3>
-                <form method=post>
 
-                    {{ render_field(form.title,class="form-control" ) }}
-                    {{ render_field(form.content,class="form-control", id='editor' ) }}
+    <h3 class="page-header">Post Oluştur</h3>
+    <form method=post>
 
-                    <input class="btn btn-info btn-block" type="submit" value="Create">
-                </form>
+        {{ render_field(form.title,class="form-control" ) }}
+        {{ render_field(form.content,class="form-control", id='editor' ) }}
 
-            </div>
+        <input class="btn btn-info btn-block" type="submit" value="Create">
+    </form>
 
-        </div>
 
-    </div>
     <script>
         CKEDITOR.replace('editor');
     </script>
