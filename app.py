@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from forms import LoginForm, InputForm
+import datetime
+
+from forms import LoginForm, InputForm, PostForm
 import json
 
 from word_exercise import word_exercise
@@ -22,10 +24,12 @@ db = SQLAlchemy(app)
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
-    subtitle = db.Column(db.String(50))
     author = db.Column(db.String(20))
-    date_posted = db.Column(db.DateTime)
+    date_posted = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     content = db.Column(db.Text)
+
+    def __repr__(self):
+        return 'Title :{} , Author: {}, Tarih: {}'.format(self.title, self.author, self.date_posted)
 
 
 class User(db.Model):
@@ -80,6 +84,26 @@ def word_exercise_url():
             "word_exercise.html",
             word_dict=word_dict,
             form=form
-            )
+        )
     else:
         pass
+
+
+@app.route("/add_post", methods=['GET', 'POST'])
+def add_post():
+    try:
+        if session['logged_in']:
+            form = PostForm(request.form)
+            if request.method == 'POST':
+                title = form.title.data
+                content = form.content.data
+                post = Posts(title=title, content=content, author=session['username'])
+                db.session.add(post)
+                db.session.commit()
+                flash('Postunuz başarı ile oluşturuldu', 'success')
+                return redirect(url_for('home'))
+            else:
+                return render_template('post/add_post.html', form=form)
+    except KeyError:
+        flash('Buraya erişmek için yetkili olmalısınız. ', 'info')
+        return redirect(url_for('home'))
