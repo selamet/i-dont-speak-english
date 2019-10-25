@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
@@ -19,6 +20,7 @@ app.config['SECRET_KEY'] = 'linuxdegilgnulinux'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + yol + '/english.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 
 
 class Posts(db.Model):

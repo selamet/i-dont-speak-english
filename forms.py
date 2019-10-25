@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import validators, StringField, PasswordField, TextAreaField
+from flask_ckeditor import CKEditorField
 
 
 class LoginForm(FlaskForm):
