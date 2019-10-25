@@ -115,3 +115,18 @@ def post_list():
     posts = Posts.query.all()
 
     return render_template('post/post_list.html', posts=posts)
+
+
+@app.route("/post/<string:id>")
+def post_detail(id):
+    post = Posts.query.filter_by(id=id).first()
+    return render_template('post/post_detail.html', post=post)
+
+
+@app.route("/post_remove/<string:id>")
+def post_remove(id):
+    Posts.query.filter_by(id=id).delete()
+    db.session.commit()
+    flash('{} Başlıklı gönderi başarı ile silindi.', 'danger')
+
+    return redirect(url_for('home'))

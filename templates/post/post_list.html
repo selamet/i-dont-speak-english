@@ -10,7 +10,6 @@
     <table class="table ">
         <thead class="thead-dark">
         <tr>
-            <th scope="col">id</th>
             <th scope="col">Başlık</th>
             <th scope="col">Yazar</th>
             <th scope="col">Tarih</th>
@@ -20,8 +19,7 @@
 
             <tbody>
 
-            <th scope="row">{{ post.id }}</th>
-            <td><a href="#"> {{ post.title }}</a></td>
+            <td><a href="/post/{{ post.id }}"> {{ post.title }}</a></td>
             <td>{{ post.author }}</td>
             <td>{{ post.date_posted }}</td>
 

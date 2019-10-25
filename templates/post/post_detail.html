@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block ust_icerik %}
+
+{% endblock %}
+
+{% block icerik %}
+    <div class="col-lg-12">
+        <h3 class="page-header">{{ post.title }}</h3>
+        <hr>
+        {{ post.content|safe }}
+
+    </div>
+{% endblock %}
