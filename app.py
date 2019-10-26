@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+from decorators import login_required, is_admin
 
 from forms import LoginForm, InputForm, PostForm
 import json
@@ -91,6 +91,7 @@ def word_exercise_url():
 
 
 @app.route("/add_post", methods=['GET', 'POST'])
+@login_required
 def add_post():
     try:
         if session['logged_in']:
@@ -124,18 +125,17 @@ def post_detail(id):
 
 
 @app.route("/post_remove/<string:id>")
+@login_required
+@is_admin
 def post_remove(id):
-    if session['username'] == 'admin':
-        Posts.query.filter_by(id=id).delete()
-        db.session.commit()
-        flash('{} Başlıklı gönderi başarı ile silindi.', 'danger')
-
-    else:
-        flash('Buraya erişmek için yetkili olmalısınız. ', 'info')
-        return redirect(url_for('home'))
+    Posts.query.filter_by(id=id).delete()
+    db.session.commit()
+    flash('{} Başlıklı gönderi başarı ile silindi.', 'danger')
 
 
 @app.route("/post_update/<string:id>", methods=['GET', 'POST'])
+@login_required
+@is_admin
 def post_update(id):
     post = Posts.query.filter_by(id=id).first()
 
