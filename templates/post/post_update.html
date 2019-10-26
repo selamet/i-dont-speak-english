@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from "include/formhelpers.html" import render_field %}
+
+{% block ust_icerik %}
+
+
+{% endblock %}
+
+{% block icerik %}
+    <h3 class="page-header">Postu Güncelle</h3>
+    <form method=POST>
+
+        {{ render_field(form.title,class="form-control" ) }}
+        {{ render_field(form.content,class="form-control", id='editor' ) }}
+
+        <input class="btn btn-info btn-block" type="submit" value="Güncelle">
+    </form>
+
+
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+{% endblock %}

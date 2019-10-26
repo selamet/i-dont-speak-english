@@ -125,8 +125,36 @@ def post_detail(id):
 
 @app.route("/post_remove/<string:id>")
 def post_remove(id):
-    Posts.query.filter_by(id=id).delete()
-    db.session.commit()
-    flash('{} Başlıklı gönderi başarı ile silindi.', 'danger')
+    if session['username'] == 'admin':
+        Posts.query.filter_by(id=id).delete()
+        db.session.commit()
+        flash('{} Başlıklı gönderi başarı ile silindi.', 'danger')
 
-    return redirect(url_for('home'))
+    else:
+        flash('Buraya erişmek için yetkili olmalısınız. ', 'info')
+        return redirect(url_for('home'))
+
+
+@app.route("/post_update/<string:id>", methods=['GET', 'POST'])
+def post_update(id):
+    post = Posts.query.filter_by(id=id).first()
+
+    if request.method == 'GET':
+
+        if post == None:
+            flash('böyle bir sayfa yok', 'danger')
+            return redirect(url_for('home'))
+        else:
+            form = PostForm()
+            form.title.data = post.title
+            form.content.data = post.content
+            return render_template('post/post_update.html', form=form, post=post)
+    else:
+
+        form = PostForm()
+        new_title = form.title.data
+        new_content = form.content.data
+        post.title = new_title
+        post.content = new_content
+        db.session.commit()
+        return redirect(url_for('home'))
