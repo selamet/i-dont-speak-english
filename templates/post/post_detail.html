@@ -7,8 +7,16 @@
 {% block icerik %}
     <div class="col-lg-12">
         <h3 class="page-header">{{ post.title }}</h3>
+
         <hr>
+
+
         {{ post.content|safe }}
+
+
+        <div>     {% if  session.username == post.author or session.username == 'admin' %}
+            <a href="/post_update/{{ post.id }}" class="btn btn-success">Güncelle</a>
+        {% endif %} </div>
 
     </div>
 {% endblock %}

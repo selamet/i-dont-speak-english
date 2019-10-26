@@ -135,26 +135,27 @@ def post_remove(id):
 
 @app.route("/post_update/<string:id>", methods=['GET', 'POST'])
 @login_required
-@is_admin
 def post_update(id):
     post = Posts.query.filter_by(id=id).first()
-
-    if request.method == 'GET':
-
-        if post == None:
-            flash('böyle bir sayfa yok', 'danger')
-            return redirect(url_for('home'))
+    if post.author == session['username']:
+        if request.method == 'GET':
+            if post == None:
+                flash('böyle bir sayfa yok', 'danger')
+                return redirect(url_for('home'))
+            else:
+                form = PostForm()
+                form.title.data = post.title
+                form.content.data = post.content
+                return render_template('post/post_update.html', form=form, post=post)
         else:
-            form = PostForm()
-            form.title.data = post.title
-            form.content.data = post.content
-            return render_template('post/post_update.html', form=form, post=post)
-    else:
 
-        form = PostForm()
-        new_title = form.title.data
-        new_content = form.content.data
-        post.title = new_title
-        post.content = new_content
-        db.session.commit()
+            form = PostForm()
+            new_title = form.title.data
+            new_content = form.content.data
+            post.title = new_title
+            post.content = new_content
+            db.session.commit()
+            return redirect(url_for('home'))
+    else:
+        flash('Erişim yetkiniz bulunmamaktadır.', 'info')
         return redirect(url_for('home'))
