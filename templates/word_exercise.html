@@ -4,19 +4,9 @@
 {% block icerik %}
 
     <div style="margin: 10%;">
-        {% for key, value in word_dict.items() %}
-            <h6>
-                Key: {{ key|e }}
-                <br>
-                Value: {{ value|e }}
-            </h6>
-        {% endfor %}
 
+        <h2>Word: {{ word }}</h2>
         <hr>
-        <hr>
-        <br>
-        
-        
 
         {{ csrf_token }}
         <form method="POST">

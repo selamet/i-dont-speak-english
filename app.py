@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import random
 from decorators import login_required, is_admin
 
 from forms import LoginForm, InputForm, PostForm
@@ -81,13 +82,34 @@ def word_exercise_url():
     word_dict = word_exercise()
 
     if request.method == 'GET':
+        word = random.choice(list(word_dict))
+        value = word_dict[word]
+
         return render_template(
             "word_exercise.html",
-            word_dict=word_dict,
+            word=word,
+            value=value,
             form=form
         )
     else:
-        pass
+        word = random.choice(list(word_dict))
+        value = word_dict[word]
+        result = request.form
+        result = result['word']
+
+        if result == value:
+            print("Tebrikllerrr")
+            print(result, value)
+        else:
+            print("Olmadı be")
+            print(result, value)
+
+        return render_template(
+            "word_exercise.html",
+            word=word,
+            value=value,
+            form=form
+        )
 
 
 @app.route("/add_post", methods=['GET', 'POST'])
