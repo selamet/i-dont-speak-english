@@ -181,3 +181,23 @@ def post_update(id):
     else:
         flash('Erişim yetkiniz bulunmamaktadır.', 'info')
         return redirect(url_for('home'))
+
+
+@app.route('/selo_word_exercise', methods=['POST', 'GET'])
+def selo_word_exercise():
+    value = {
+        "word_1": {
+            "eng_word": 'order',
+            "user": 'selamet',
+            "turk_word": ['sipariş vermek', 'Sıraya koymak', 'Çalışmıyor'],
+            "created_date": '28.11.2019'
+        },
+        "word_2": {
+            "eng_word": 'old',
+            "user": 'selamet',
+            "turk_word": ['eski', 'yaşlı'],
+            "created_date": '28.11.2019'
+        }
+    }
+
+    return render_template('word_exercise_selo.html', value=value)

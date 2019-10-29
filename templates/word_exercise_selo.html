@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block ust_icerik %}
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script type="text/javascript" rel="script">
+
+        var a = JSON.parse('{{ value|tojson|safe }}');
+
+        console.log(a.word_1.eng_word);
+
+        $(document).ready(function () {
+            var yeni_kelime=5;
+            $this = $(this);
+            var kelime = a.word_1.eng_word;
+            $this.find('#value').html(kelime);
+
+            console.log('saü');
+            $('.girilen').on('keyup', function (e) {
+                e.preventDefault();
+                var girilen = $this.find('.girilen').val();
+                console.log(girilen, '--', kelime);
+                if (girilen == kelime) {
+
+                    $this.find('#value').html(yeni_kelime);
+                    kelime=yeni_kelime;
+                    yeni_kelime+=1;
+                }
+            });
+
+
+        });
+
+
+    </script>
+
+
+{% endblock %}
+
+
+
+{% block icerik %}
+
+    <div class="col-12">
+        <br>
+        <span class="col-lg-5 pull-center" id="value"> </span>
+        <br><br>
+        <div class=" col-lg-8 offset-lg-2 ">
+            <input placeholder="..." class="girilen form-control " type="text">
+        </div>
+    </div>
+
+{% endblock %}
