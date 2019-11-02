@@ -75,43 +75,6 @@ def logout():
     session.clear()
     return redirect(url_for("home"))
 
-
-@app.route("/word_exercise", methods=['GET', 'POST'])
-def word_exercise_url():
-    form = InputForm()
-    word_dict = word_exercise()
-
-    if request.method == 'GET':
-        word = random.choice(list(word_dict))
-        value = word_dict[word]
-
-        return render_template(
-            "word_exercise.html",
-            word=word,
-            value=value,
-            form=form
-        )
-    else:
-        word = random.choice(list(word_dict))
-        value = word_dict[word]
-        result = request.form
-        result = result['word']
-
-        if result == value:
-            print("Tebrikllerrr")
-            print(result, value)
-        else:
-            print("Olmadı be")
-            print(result, value)
-
-        return render_template(
-            "word_exercise.html",
-            word=word,
-            value=value,
-            form=form
-        )
-
-
 @app.route("/add_post", methods=['GET', 'POST'])
 @login_required
 def add_post():
@@ -183,8 +146,8 @@ def post_update(id):
         return redirect(url_for('home'))
 
 
-@app.route('/selo_word_exercise', methods=['POST', 'GET'])
-def selo_word_exercise():
+@app.route('/word_exercise', methods=['POST', 'GET'])
+def word_exercise():
     value = {
         "word_1": {
             "eng_word": 'order',
@@ -200,4 +163,4 @@ def selo_word_exercise():
         }
     }
 
-    return render_template('word_exercise_selo.html', value=value)
+    return render_template('word_exercise.html', value=value)
