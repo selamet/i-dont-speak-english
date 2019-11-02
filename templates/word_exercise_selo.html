@@ -7,30 +7,41 @@
 
         var a = JSON.parse('{{ value|tojson|safe }}');
 
-        console.log(a.word_1.eng_word);
+        function change_value(a) {
+            const keys = Object.keys(a)
+            const randIndex = Math.floor(Math.random() * keys.length);
+            const randKey = keys[randIndex];
+            const name = a[randKey];
+            return name
+        }
+
+        var value = change_value(a);
+
 
         $(document).ready(function () {
-            var yeni_kelime = 5;
             $this = $(this);
-            var kelime = a.word_1.eng_word;
-            $this.find('#value').html(kelime);
+            var word = value.eng_word;
+            var tr_word = value.turk_word;
+
+            $this.find('#value').html(word);
             $('.tebrikler ').hide();
 
-            console.log('saü');
             $('.girilen').on('keyup', function (e) {
                 e.preventDefault();
                 var girilen = $this.find('.girilen').val();
-                console.log(girilen, '--', kelime);
-                if (girilen == kelime) {
+
+                if (tr_word.includes(girilen)) {
 
                     $('.tebrikler').show();
 
                     var delayInMilliseconds = 1000;
 
                     setTimeout(function () {
-                        $this.find('#value').html(yeni_kelime);
-                        kelime = yeni_kelime;
-                        yeni_kelime += 1;
+                        var new_word = change_value(a);
+                        $this.find('#value').html(new_word.eng_word);
+                        word = new_word.eng_word;
+                        tr_word = new_word.turk_word;
+
                         $('.girilen').val('');
                         $('.tebrikler ').hide();
 
@@ -39,11 +50,11 @@
 
                 }
             });
-            $('.skip').on('click',function (e) {
+            $('.skip').on('click', function (e) {
                 e.preventDefault();
                 $this.find('#value').html(yeni_kelime);
-                        kelime = yeni_kelime;
-                        yeni_kelime += 1;
+                kelime = yeni_kelime;
+                yeni_kelime += 1;
             })
 
 
@@ -61,7 +72,7 @@
 
     <div class="col-12">
         <div style=" background: #35b0ab; border-radius:25px;  height: 50px; text-align: center; margin-top: 50px; "
-             class="offset-lg-0">
+             class="offset-lg-0 info">
 
             <span style="font-size: 25px; margin-top:15px; color: #f0f0f0;" id="value"> </span>
 
