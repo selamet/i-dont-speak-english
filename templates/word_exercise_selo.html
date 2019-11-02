@@ -8,7 +8,7 @@
         var a = JSON.parse('{{ value|tojson|safe }}');
 
         function change_value(a) {
-            const keys = Object.keys(a)
+            const keys = Object.keys(a);
             const randIndex = Math.floor(Math.random() * keys.length);
             const randKey = keys[randIndex];
             const name = a[randKey];
@@ -52,9 +52,12 @@
             });
             $('.skip').on('click', function (e) {
                 e.preventDefault();
-                $this.find('#value').html(yeni_kelime);
-                kelime = yeni_kelime;
-                yeni_kelime += 1;
+                var new_word = change_value(a);
+                $this.find('#value').html(new_word.eng_word);
+                word = new_word.eng_word;
+                tr_word = new_word.turk_word;
+
+                $('.girilen').val('');
             })
 
 
