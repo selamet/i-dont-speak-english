@@ -10,10 +10,11 @@
         console.log(a.word_1.eng_word);
 
         $(document).ready(function () {
-            var yeni_kelime=5;
+            var yeni_kelime = 5;
             $this = $(this);
             var kelime = a.word_1.eng_word;
             $this.find('#value').html(kelime);
+            $('.tebrikler ').hide();
 
             console.log('saü');
             $('.girilen').on('keyup', function (e) {
@@ -22,11 +23,28 @@
                 console.log(girilen, '--', kelime);
                 if (girilen == kelime) {
 
-                    $this.find('#value').html(yeni_kelime);
-                    kelime=yeni_kelime;
-                    yeni_kelime+=1;
+                    $('.tebrikler').show();
+
+                    var delayInMilliseconds = 1000;
+
+                    setTimeout(function () {
+                        $this.find('#value').html(yeni_kelime);
+                        kelime = yeni_kelime;
+                        yeni_kelime += 1;
+                        $('.girilen').val('');
+                        $('.tebrikler ').hide();
+
+                    }, delayInMilliseconds);
+
+
                 }
             });
+            $('.skip').on('click',function (e) {
+                e.preventDefault();
+                $this.find('#value').html(yeni_kelime);
+                        kelime = yeni_kelime;
+                        yeni_kelime += 1;
+            })
 
 
         });
@@ -42,12 +60,23 @@
 {% block icerik %}
 
     <div class="col-12">
-        <br>
-        <span class="col-lg-5 pull-center" id="value"> </span>
-        <br><br>
-        <div class=" col-lg-8 offset-lg-2 ">
-            <input placeholder="..." class="girilen form-control " type="text">
+        <div style=" background: #35b0ab; border-radius:25px;  height: 50px; text-align: center; margin-top: 50px; "
+             class="offset-lg-0">
+
+            <span style="font-size: 25px; margin-top:15px; color: #f0f0f0;" id="value"> </span>
+
         </div>
+        <div style="margin-top:50px;" class=" col-lg-8 offset-lg-2 ">
+            <input placeholder="..." class="col-lg-12 girilen form-control " type="text">
+
+            <button style="margin-top:30px;" class="skip btn btn-info btn-block  col-lg-10 offset-lg-1"> Skip</button>
+        </div>
+
+
+        <div style="text-align: center; margin-top: 100px;" class="">
+            <p class="text-success tebrikler"> Tebrikler doğru bildiniz. </p>
+        </div>
+
     </div>
 
 {% endblock %}
