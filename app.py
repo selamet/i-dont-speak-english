@@ -7,7 +7,6 @@ from decorators import login_required, is_admin
 from forms import LoginForm, InputForm, PostForm
 import json
 
-from word_exercise import word_exercise
 
 with open("bilgiler/bilgiler.json") as read_file:
     data = read_file.read()
@@ -160,6 +159,24 @@ def word_exercise():
             "user": 'selamet',
             "turk_word": ['eski', 'yaşlı'],
             "created_date": '28.11.2019'
+        },
+        "word_3": {
+            "eng_word": 'age',
+            "user": 'selamet',
+            "turk_word": ['yaş'],
+            "created_date": '28.11.2019'
+        },
+        "word_4": {
+            "eng_word": 'carpet',
+            "user": 'selamet',
+            "turk_word": ['halı'],
+            "creadet_date": '28.11.2019'
+        },
+        "word_5": {
+            "eng_word": 'word',
+            "user": 'selamet',
+            "turk_word": ['kelime'],
+            "creadet_date": '28.11.2019'
         }
     }
 
