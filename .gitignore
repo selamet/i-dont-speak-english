@@ -105,6 +105,6 @@ venv.bak/
 .idea/
 
 .DS_Store
-bilgiler
+app/bilgiler
 .vscode
 *.db
