@@ -49,7 +49,8 @@ def add_post():
             if request.method == 'POST':
                 title = form.title.data
                 content = form.content.data
-                post = Posts(title=title, content=content, author=session['username'])
+                post = Posts(title=title, content=content,
+                             author=User.query.filter_by(username=session['username']).first())
                 db.session.add(post)
                 db.session.commit()
                 flash('Postunuz başarı ile oluşturuldu', 'success')
