@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, session, flash
 from app.decorators import login_required, is_admin
 
-from app.forms import LoginForm, PostForm
+from app.forms import LoginForm, PostForm, WordForm
 
-from app.models import User, Posts
+from app.models import User, Posts, WordsModel
 
 from app import app, db
 
@@ -147,4 +147,25 @@ def word_exercise():
         }
     }
 
-    return render_template('word_exercise.html', value=value)
+    return render_template('word/word_exercise.html', value=value)
+
+
+@app.route('/word_create', methods=['POST', 'GET'])
+def word_create():
+    count = db.session.query(WordsModel).filter_by().count()
+    if request.args.get('eng_value'):
+        eng_value = tr_to_eng(request.args.get('eng_value'))
+    tr_value = request.args.get('tr_value')
+
+    if tr_value:
+        tr_value = tr_value.split(',')
+
+    word_name = 'word_' + str(count + 1)
+    user = session['username']
+    form = WordForm()
+    return render_template('word/word_create.html', form=form)
+
+
+def tr_to_eng(val=''):
+    val = val.translate(str.maketrans('ĞğÜüŞşİıÖöÇç', 'GgUuSsIiOoCc'))
+    return val

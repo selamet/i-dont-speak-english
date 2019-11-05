@@ -15,3 +15,8 @@ class InputForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField("Başlık")
     content = TextAreaField("İçerik")
+
+
+class WordForm(FlaskForm):
+    eng_word = StringField('English Word')
+    trk_word = StringField('Turkish Word')

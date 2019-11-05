@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% from "include/formhelpers.html" import render_field %}
+
+{% block ust_icerik %}
+
+    <script type="text/javascript" rel="script">
+
+
+        $(document).ready(function () {
+
+            $('.add_form').on('click', function (e) {
+                e.preventDefault();
+                input = ' <input style="margin-top:10px; margin-bottom:10px;", class="trk_input form-control float-left col-lg-11" type="text">\n';
+                $('.new_input').append(input);
+            });
+
+
+            $('.send_button').on('click', function (e) {
+                e.preventDefault();
+                var eng_value = $('.eng_word').val();
+                var arr = $('.trk_input').map((i, e) => e.value).get();
+
+                console.log(arr);
+                $.ajax({
+                    url: '/word_create',
+                    data: {'tr_value': arr.toString(), 'eng_value': eng_value},
+                    success: function (data) {
+                        var txt = eng_value + ' Başarı ile eklendi';
+                        $('.success_status').html(txt);
+                    }
+                })
+                ;
+            });
+
+        });
+
+
+    </script>
+
+{% endblock %}
+
+
+{% block icerik %}
+
+    <form id="word_create_form" method="post">
+
+        {{ render_field(form.eng_word,class="form-control eng_word" ) }}
+        <div class="turkish_word">
+            {{ render_field(form.trk_word,class="trk_input form-control float-left col-lg-11",style="margin-top:8px; margin-right:10px;") }}
+            <span class="add_form btn btn-success">+ </span>
+        </div>
+
+        <div class="new_input">
+
+        </div>
+
+        <input style="margin-top: 15px;" class="btn btn-info btn-block send_button" type="submit" value="Create">
+
+    </form>
+
+
+    <div style=" margin-top:50px; font-size: 24px; text-align: center" class="text-success success_status">
+    </div>
+
+{% endblock %}

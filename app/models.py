@@ -37,9 +37,9 @@ class User(db.Model):
 
 class WordsModel(db.Model):
     __tablename__ = 'words'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     json_data = db.Column(JSON)
     unit = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {}>'.format(self.json_data)
