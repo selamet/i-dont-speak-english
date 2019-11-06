@@ -14,22 +14,36 @@
                 $('.new_input').append(input);
             });
 
-
             $('.send_button').on('click', function (e) {
                 e.preventDefault();
                 var eng_value = $('.eng_word').val();
                 var arr = $('.trk_input').map((i, e) => e.value).get();
-
                 console.log(arr);
-                $.ajax({
-                    url: '/word_create',
-                    data: {'tr_value': arr.toString(), 'eng_value': eng_value},
-                    success: function (data) {
-                        var txt = eng_value + ' Başarı ile eklendi';
-                        $('.success_status').html(txt);
-                    }
-                })
-                ;
+                var unit = $('.unit').val();
+                if (eng_value == "" || arr == '' || unit == '') {
+                    alert('Tüm boşlukları doldurmalısnız !!! ');
+                } else {
+
+
+                    var create = 1;
+                    console.log(unit);
+                    console.log(arr, eng_value);
+                    $.ajax({
+                        url: '/word_create',
+                        data: {
+                            'tr_value': arr.toString(),
+                            'eng_value': eng_value,
+                            'unit': unit,
+                            'create': create,
+                        },
+                        success: function (data) {
+                            var txt = eng_value + ' Başarı ile eklendi';
+                            $('.success_status').html(txt);
+                            $('.eng_word').val('');
+                            $('.trk_input').val('');
+                        }
+                    });
+                }
             });
 
         });
@@ -43,6 +57,9 @@
 {% block icerik %}
 
     <form id="word_create_form" method="post">
+
+        <h3 class="page-header">Word Create Page</h3>
+        {{ render_field(form.unit,class="form-control unit" ) }}
 
         {{ render_field(form.eng_word,class="form-control eng_word" ) }}
         <div class="turkish_word">

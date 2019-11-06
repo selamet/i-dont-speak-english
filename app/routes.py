@@ -153,15 +153,25 @@ def word_exercise():
 @app.route('/word_create', methods=['POST', 'GET'])
 def word_create():
     count = db.session.query(WordsModel).filter_by().count()
-    if request.args.get('eng_value'):
+    if request.args.get('create'):
         eng_value = tr_to_eng(request.args.get('eng_value'))
-    tr_value = request.args.get('tr_value')
-
-    if tr_value:
+        tr_value = request.args.get('tr_value')
         tr_value = tr_value.split(',')
+        word_name = 'word_' + str(count + 1)
+        user = session['username']
+        unit = request.args.get('unit')
+        json_data = {
+            word_name: {
+                'eng_word': eng_value,
+                'turk_word': tr_value,
+                'user': user,
+            }
+        }
+        wm = WordsModel(json_data=json_data, unit=unit)
+        print(wm)
+        db.session.add(wm)
+        db.session.commit()
 
-    word_name = 'word_' + str(count + 1)
-    user = session['username']
     form = WordForm()
     return render_template('word/word_create.html', form=form)
 

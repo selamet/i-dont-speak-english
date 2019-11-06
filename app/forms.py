@@ -20,3 +20,4 @@ class PostForm(FlaskForm):
 class WordForm(FlaskForm):
     eng_word = StringField('English Word')
     trk_word = StringField('Turkish Word')
+    unit = StringField('Unit')
