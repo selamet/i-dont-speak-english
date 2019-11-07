@@ -7,24 +7,28 @@
 
 
         $(document).ready(function () {
-
+            var input_count = 1;
             $('.add_form').on('click', function (e) {
                 e.preventDefault();
                 input = ' <input style="margin-top:10px; margin-bottom:10px;", class="trk_input form-control float-left col-lg-11" type="text">\n';
                 $('.new_input').append(input);
+                input_count++;
             });
 
             $('.send_button').on('click', function (e) {
                 e.preventDefault();
                 var eng_value = $('.eng_word').val();
                 var arr = $('.trk_input').map((i, e) => e.value).get();
-                console.log(arr);
+                if (arr.includes('')) {
+                    for (i = 0; i < arr.length; i++)
+                        if (arr[i] == '')
+                            arr.splice(i, input_count);
+                }
+
                 var unit = $('.unit').val();
                 if (eng_value == "" || arr == '' || unit == '') {
                     alert('Tüm boşlukları doldurmalısnız !!! ');
                 } else {
-
-
                     var create = 1;
                     console.log(unit);
                     console.log(arr, eng_value);

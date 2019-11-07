@@ -150,6 +150,7 @@ def word_exercise():
     return render_template('word/word_exercise.html', value=value)
 
 
+@login_required
 @app.route('/word_create', methods=['POST', 'GET'])
 def word_create():
     count = db.session.query(WordsModel).filter_by().count()
@@ -167,10 +168,10 @@ def word_create():
                 'user': user,
             }
         }
-        wm = WordsModel(json_data=json_data, unit=unit)
-        print(wm)
-        db.session.add(wm)
-        db.session.commit()
+       # wm = WordsModel(json_data=json_data, unit=unit)
+        #print(wm)
+      #  db.session.add(wm)
+       # db.session.commit()
 
     form = WordForm()
     return render_template('word/word_create.html', form=form)
