@@ -42,4 +42,4 @@ class WordsModel(db.Model):
     unit = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return '<id {}>'.format(self.json_data)
+        return '<id {} Value: {}>'.format(self.id, self.json_data)

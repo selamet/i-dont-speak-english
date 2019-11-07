@@ -15,10 +15,10 @@
             return name
         }
 
-        var value = change_value(a);
-
 
         $(document).ready(function () {
+            var value = change_value(a);
+
             $this = $(this);
             var word = value.eng_word;
             var tr_word = value.turk_word;
@@ -30,7 +30,7 @@
                 e.preventDefault();
                 var girilen = $this.find('.girilen').val();
 
-                if (tr_word.includes(girilen)) {
+                if (tr_word.includes(girilen.toLowerCase())) {
 
                     $('.tebrikler').show();
 
@@ -51,13 +51,20 @@
                 }
             });
             $('.skip').on('click', function (e) {
-                e.preventDefault();
-                var new_word = change_value(a);
-                $this.find('#value').html(new_word.eng_word);
-                word = new_word.eng_word;
-                tr_word = new_word.turk_word;
 
-                $('.girilen').val('');
+                var delayInMilliseconds = 1000;
+
+                setTimeout(function () {
+
+
+                    e.preventDefault();
+                    var new_word = change_value(a);
+                    $this.find('#value').html(new_word.eng_word);
+                    word = new_word.eng_word;
+                    tr_word = new_word.turk_word;
+
+                    $('.girilen').val('');
+                }, delayInMilliseconds);
             })
 
 

@@ -112,41 +112,18 @@ def post_update(id):
         return redirect(url_for('home'))
 
 
-@app.route('/word_exercise', methods=['POST', 'GET'])
-def word_exercise():
-    value = {
-        "word_1": {
-            "eng_word": 'order',
-            "user": 'selamet',
-            "turk_word": ['sipariş vermek', 'Sıraya koymak', 'Çalışmıyor'],
-            "created_date": '28.11.2019'
-        },
-        "word_2": {
-            "eng_word": 'old',
-            "user": 'selamet',
-            "turk_word": ['eski', 'yaşlı'],
-            "created_date": '28.11.2019'
-        },
-        "word_3": {
-            "eng_word": 'age',
-            "user": 'selamet',
-            "turk_word": ['yaş'],
-            "created_date": '28.11.2019'
-        },
-        "word_4": {
-            "eng_word": 'carpet',
-            "user": 'selamet',
-            "turk_word": ['halı'],
-            "creadet_date": '28.11.2019'
-        },
-        "word_5": {
-            "eng_word": 'word',
-            "user": 'selamet',
-            "turk_word": ['kelime'],
-            "creadet_date": '28.11.2019'
-        }
-    }
+@app.route('/word_exercise/<string:id>', methods=['POST', 'GET'])
+def word_exercise(id):
+    value = {}
+    words = WordsModel.query.filter_by(unit=id).all()
+    try:
+        if words[0]:
+            pass
+    except:
+        return ''' Tatlım böyle bir sayfa yok. <a href="/"> ana sayfaya gitmek için click me</a> '''
 
+    for i in words:
+        value.update(i.json_data)
     return render_template('word/word_exercise.html', value=value)
 
 
@@ -168,10 +145,10 @@ def word_create():
                 'user': user,
             }
         }
-       # wm = WordsModel(json_data=json_data, unit=unit)
-        #print(wm)
-      #  db.session.add(wm)
-       # db.session.commit()
+        wm = WordsModel(json_data=json_data, unit=unit)
+        print(wm)
+        db.session.add(wm)
+        db.session.commit()
 
     form = WordForm()
     return render_template('word/word_create.html', form=form)
