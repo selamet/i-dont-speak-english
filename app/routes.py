@@ -112,6 +112,18 @@ def post_update(id):
         return redirect(url_for('home'))
 
 
+@app.route('/word_exercise_list')
+def word_exercise_list():
+    unite = []
+    words = WordsModel.query.filter_by().all()
+
+    for i in words:
+        if i.unit not in unite:
+            unite.append(i.unit)
+
+    return render_template('word/word_list.html', words=words, unit=unite)
+
+
 @app.route('/word_exercise/<string:id>', methods=['POST', 'GET'])
 def word_exercise(id):
     value = {}

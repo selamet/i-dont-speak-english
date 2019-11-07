@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block ust_icerik %}
+
+{% endblock %}
+
+
+{% block icerik %}
+
+    <h3 class="page-header"> Words Examples</h3>
+
+    {% for u in unit %}
+        <a href="/word_exercise/{{ u }}"> Unite {{ u }}</a>
+    {% endfor %}
+
+{% endblock %}
