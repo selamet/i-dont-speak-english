@@ -1,11 +1,11 @@
 from flask import render_template, request, redirect, url_for, session, flash
-from app.decorators import login_required, is_admin
+from app.decorators import login_required, is_admin, page_not_found_post, page_not_found_word
 
 from app.forms import LoginForm, PostForm, WordForm
 
 from app.models import User, Posts, WordsModel
-
 from app import app, db
+from xml.sax.saxutils import unescape
 
 
 @app.route('/')
@@ -70,14 +70,17 @@ def post_list():
 
 
 @app.route("/post/<string:id>")
+@page_not_found_post
 def post_detail(id):
     post = Posts.query.filter_by(id=id).first()
-    return render_template('post/post_detail.html', post=post)
+    post_content = unescape(post.content)
+    return render_template('post/post_detail.html', post=post, post_content=post_content)
 
 
 @app.route("/post_remove/<string:id>")
 @login_required
 @is_admin
+@page_not_found_post
 def post_remove(id):
     Posts.query.filter_by(id=id).delete()
     db.session.commit()
@@ -86,6 +89,7 @@ def post_remove(id):
 
 @app.route("/post_update/<string:id>", methods=['GET', 'POST'])
 @login_required
+@page_not_found_post
 def post_update(id):
     post = Posts.query.filter_by(id=id).first()
     if post.author == session['username']:
@@ -125,6 +129,7 @@ def word_exercise_list():
 
 
 @app.route('/word_exercise/<string:id>', methods=['POST', 'GET'])
+@page_not_found_word
 def word_exercise(id):
     value = {}
     words = WordsModel.query.filter_by(unit=id).all()
