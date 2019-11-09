@@ -10,3 +10,17 @@
   python3 wsgi.py
 
 ```
+
+### Postgresql conf:
+```
+  sudo -u postgres psql
+  CREATE DATABASE english;
+  CREATE USER kullanici_adi WITH PASSWORD 'parola123';
+  
+  ALTER ROLE kullanici_adi SET client_encoding TO 'utf8';
+  ALTER ROLE kullanici_adi SET default_transaction_isolation TO 'read committed';
+  ALTER ROLE kullanici_adi SET timezone TO 'Europe/Istanbul';
+  
+  GRANT ALL PRIVILEGES ON DATABASE english TO kullanici_adi;
+  \q
+```
