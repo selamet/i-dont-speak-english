@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 {% block ust_icerik %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var a = '{{ post_content }}';
+            console.log(a);
+            // console.log(markdown.toHTML(a));
 
+        });
 
-
+    </script>
 {% endblock %}
 
 {% block icerik %}
@@ -11,9 +17,6 @@
         <h3 class="page-header">{{ post.title }}</h3>
 
         <hr>
-        {% filter escape %}
-            {{ post_content|safe }}
-        {% endfilter %}
 
         <div>     {% if  session.username == post.author or session.username == 'admin' %}
             <a href="/post_update/{{ post.id }}" class="btn btn-success">Güncelle</a>

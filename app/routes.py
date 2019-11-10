@@ -5,7 +5,8 @@ from app.forms import LoginForm, PostForm, WordForm
 
 from app.models import User, Posts, WordsModel
 from app import app, db
-from xml.sax.saxutils import unescape
+
+
 
 
 @app.route('/')
@@ -73,7 +74,7 @@ def post_list():
 @page_not_found_post
 def post_detail(id):
     post = Posts.query.filter_by(id=id).first()
-    post_content = unescape(post.content)
+    post_content = post.content
     return render_template('post/post_detail.html', post=post, post_content=post_content)
 
 
