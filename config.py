@@ -12,5 +12,5 @@ password = obj['password']
 
 
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://' + username + ':' + password + '@localhost:5432/learn_english'
+    SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://' + username + ':' + password + '@englishdb:5432/englishdb'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
