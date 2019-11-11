@@ -24,6 +24,9 @@
             $this = $(this);
             var word = value.eng_word;
             var tr_word = value.turk_word;
+            console.log(tr_word);
+
+            console.log(tr_word.includes('İngilizce bilmiyorum'));
 
             $this.find('#value').html(word);
             $('.tebrikler ').hide();
@@ -31,6 +34,7 @@
             $('.girilen').on('keyup', function (e) {
                 e.preventDefault();
                 var girilen = $this.find('.girilen').val();
+                console.log('girilen: ' + girilen + ' word:' + tr_word);
 
                 if (tr_word.includes(girilen.toLowerCase())) {
 
@@ -39,14 +43,13 @@
                     var delayInMilliseconds = 1000;
 
                     setTimeout(function () {
+                        true_count++;
+                        $('.dogru_bilinen').append(word + ' -> ' + tr_word + '</br>');
+                        $('.true_count').html(true_count);
                         var new_word = change_value(a);
                         $this.find('#value').html(new_word.eng_word);
                         word = new_word.eng_word;
                         tr_word = new_word.turk_word;
-                        true_count++;
-                        console.log(true_count);
-                        $('.dogru_bilinen').append(word + ' -> ' + tr_word + '</br>');
-                        $('.true_count').html(true_count);
                         $('.girilen').val('');
                         $('.tebrikler ').hide();
 
@@ -61,15 +64,15 @@
 
                 setTimeout(function () {
 
-
                     e.preventDefault();
+                    $('.yanlis_bilinen').append(word + ' -> ' + tr_word + '</br>');
+                    false_count++;
+                    $('.false_count').html(false_count);
                     var new_word = change_value(a);
                     $this.find('#value').html(new_word.eng_word);
                     word = new_word.eng_word;
                     tr_word = new_word.turk_word;
-                    $('.yanlis_bilinen').append(word + ' -> ' + tr_word + '</br>');
-                    false_count++;
-                    $('.false_count').html(false_count);
+
 
                     $('.girilen').val('');
                 }, delayInMilliseconds);

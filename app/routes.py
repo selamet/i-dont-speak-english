@@ -150,7 +150,7 @@ def word_create():
     if request.args.get('create'):
         eng_value = tr_to_eng(request.args.get('eng_value'))
         tr_value = request.args.get('tr_value')
-        tr_value = tr_value.split(',')
+        tr_value = [word.lower() for word in tr_value.split(',')]
         word_name = 'word_' + str(count + 1)
         user = session['username']
         unit = request.args.get('unit')
@@ -162,7 +162,6 @@ def word_create():
             }
         }
         wm = WordsModel(json_data=json_data, unit=unit)
-        print(wm)
         db.session.add(wm)
         db.session.commit()
 
