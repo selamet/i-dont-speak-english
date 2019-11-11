@@ -17,6 +17,8 @@
 
 
         $(document).ready(function () {
+            var true_count = 0;
+            var false_count = 0;
             var value = change_value(a);
 
             $this = $(this);
@@ -41,7 +43,10 @@
                         $this.find('#value').html(new_word.eng_word);
                         word = new_word.eng_word;
                         tr_word = new_word.turk_word;
-
+                        true_count++;
+                        console.log(true_count);
+                        $('.dogru_bilinen').append(word + ' -> ' + tr_word + '</br>');
+                        $('.true_count').html(true_count);
                         $('.girilen').val('');
                         $('.tebrikler ').hide();
 
@@ -62,6 +67,9 @@
                     $this.find('#value').html(new_word.eng_word);
                     word = new_word.eng_word;
                     tr_word = new_word.turk_word;
+                    $('.yanlis_bilinen').append(word + ' -> ' + tr_word + '</br>');
+                    false_count++;
+                    $('.false_count').html(false_count);
 
                     $('.girilen').val('');
                 }, delayInMilliseconds);
@@ -89,13 +97,22 @@
         </div>
         <div style="margin-top:50px;" class=" col-lg-8 offset-lg-2 ">
             <input placeholder="..." class="col-lg-12 girilen form-control " type="text">
-
             <button style="margin-top:30px;" class="skip btn btn-info btn-block  col-lg-10 offset-lg-1"> Skip</button>
         </div>
 
 
         <div style="text-align: center; margin-top: 100px;" class="">
             <p class="text-success tebrikler"> Tebrikler doğru bildiniz. </p>
+        </div>
+
+
+        <div class="col-lg-12">
+            <div style="text-align:center" class="col-lg-6 text-success float-left dogru_bilinen"><h3
+                    class="text-info page-header"> Doğru Bildikleriniz (<span class="true_count">0</span>)</h3>
+
+            </div>
+            <div style="text-align: center;" class="col-lg-6 text-danger float-left yanlis_bilinen"><h3
+                    class="page-header">Yanlış Bildikleriniz (<span class="false_count">0</span>)</h3></div>
         </div>
 
     </div>
