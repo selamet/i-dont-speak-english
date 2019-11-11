@@ -13,6 +13,7 @@ class Posts(db.Model):
     content = db.Column(db.Text)
     slug = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    unit = db.Column(db.Integer)
 
     def __init__(self, *args, **kwargs):
         if not 'slug' in kwargs:

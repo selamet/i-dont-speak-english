@@ -10,6 +10,7 @@
     <h3 class="page-header">Postu Güncelle</h3>
     <form method=POST>
 
+        {{ render_field(form.unit,class="form-control" ) }}
         {{ render_field(form.title,class="form-control" ) }}
         {{ render_field(form.content,class="form-control", id='editor' ) }}
 
@@ -17,7 +18,5 @@
     </form>
 
 
-    <script>
-        CKEDITOR.replace('editor');
-    </script>
+
 {% endblock %}

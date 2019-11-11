@@ -15,6 +15,7 @@ class InputForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField("Başlık")
     content = TextAreaField("İçerik")
+    unit = StringField('Unit')
 
 
 class WordForm(FlaskForm):

@@ -1,3 +1,4 @@
+from xml.sax.saxutils import unescape
 from flask import render_template, request, redirect, url_for, session, flash
 from app.decorators import login_required, is_admin, page_not_found_post, page_not_found_word
 
@@ -5,8 +6,6 @@ from app.forms import LoginForm, PostForm, WordForm
 
 from app.models import User, Posts, WordsModel
 from app import app, db
-
-
 
 
 @app.route('/')
@@ -50,8 +49,9 @@ def add_post():
             if request.method == 'POST':
                 title = form.title.data
                 content = form.content.data
+                unit = form.unit.data
                 post = Posts(title=title, content=content,
-                             author=User.query.filter_by(username=session['username']).first())
+                             author=User.query.filter_by(username=session['username']).first(), unit=unit)
                 db.session.add(post)
                 db.session.commit()
                 flash('Postunuz başarı ile oluşturuldu', 'success')
@@ -74,7 +74,7 @@ def post_list():
 @page_not_found_post
 def post_detail(id):
     post = Posts.query.filter_by(id=id).first()
-    post_content = post.content
+    post_content = unescape(post.content)
     return render_template('post/post_detail.html', post=post, post_content=post_content)
 
 
@@ -93,27 +93,25 @@ def post_remove(id):
 @page_not_found_post
 def post_update(id):
     post = Posts.query.filter_by(id=id).first()
-    if post.author == session['username']:
-        if request.method == 'GET':
-            if post == None:
-                flash('böyle bir sayfa yok', 'danger')
-                return redirect(url_for('home'))
-            else:
-                form = PostForm()
-                form.title.data = post.title
-                form.content.data = post.content
-                return render_template('post/post_update.html', form=form, post=post)
-        else:
 
-            form = PostForm()
-            new_title = form.title.data
-            new_content = form.content.data
-            post.title = new_title
-            post.content = new_content
-            db.session.commit()
+    if request.method == 'GET':
+        if post == None:
+            flash('böyle bir sayfa yok', 'danger')
             return redirect(url_for('home'))
+        else:
+            form = PostForm()
+            form.title.data = post.title
+            form.content.data = post.content
+            form.unit.data = post.unit
+            return render_template('post/post_update.html', form=form, post=post)
     else:
-        flash('Erişim yetkiniz bulunmamaktadır.', 'info')
+
+        form = PostForm()
+        new_title = form.title.data
+        new_content = form.content.data
+        post.title = new_title
+        post.content = new_content
+        db.session.commit()
         return redirect(url_for('home'))
 
 
