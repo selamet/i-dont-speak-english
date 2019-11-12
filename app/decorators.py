@@ -46,7 +46,7 @@ def page_not_found_word(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         id = kwargs['id']
-        post = WordsModel.query.filter_by(id=id).first()
+        post = WordsModel.query.filter_by(unit=id).first()
         if post:
             return f(*args, **kwargs)
         else:
