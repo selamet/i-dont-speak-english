@@ -7,6 +7,7 @@ from app.forms import LoginForm, PostForm, WordForm
 from app.models import User, Posts, WordsModel
 from app import app, db
 
+from create_json_file import write_json
 
 @app.route('/')
 def home():
@@ -152,15 +153,15 @@ def word_create():
         tr_value = request.args.get('tr_value')
         tr_value = [word.lower() for word in tr_value.split(',')]
         word_name = 'word_' + str(count + 1)
-        user = session['username']
         unit = request.args.get('unit')
         json_data = {
             word_name: {
-                'eng_word': eng_value,
-                'turk_word': tr_value,
-                'user': user,
-            }
+                "eng_word": eng_value,
+                "turk_word": tr_value,
+            },
+            "unit": unit
         }
+        write_json(json_data)
         wm = WordsModel(json_data=json_data, unit=unit)
         db.session.add(wm)
         db.session.commit()

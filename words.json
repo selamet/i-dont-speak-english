@@ -1,0 +1,31 @@
+{
+  "word_4": {
+    "eng_word": "by the way",
+    "turk_word": [
+      "bu arada",
+      "sırası gelmişken"
+    ],
+    "unit": "1"
+  },
+  "word_5": {
+    "eng_word": "January",
+    "turk_word": [
+      "ocak"
+    ]
+  },
+  "unit": "1",
+  "word_6": {
+    "eng_word": "qweqw",
+    "turk_word": [
+      "eqweqwe",
+      "wq"
+    ]
+  },
+  "word_7": {
+    "eng_word": "asdfasdf",
+    "turk_word": [
+      "asdfasd",
+      "fa"
+    ]
+  }
+}
