@@ -9,8 +9,25 @@
 
     <h3 class="page-header"> Words Examples</h3>
 
-    {% for u in unit %}
-        <a href="/word_exercise/{{ u }}"> Unite {{ u }}</a>
-    {% endfor %}
+    <table class="table ">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Unit</th>
+            <th scope="col">Açıklama</th>
+
+        </tr>
+        </thead>
+        {% for u in unit %}
+
+            <tbody>
+            <td><a href="/word_exercise/{{ u }}"> Unite {{ u }}</a></td>
+            <td>< Açıklama</td>
+
+
+            </tbody>
+        {% endfor %}
+
+    </table>
+
 
 {% endblock %}
