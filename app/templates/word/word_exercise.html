@@ -31,7 +31,7 @@
             $this.find('#value').html(word);
             $('.tebrikler ').hide();
 
-            $('.girilen').on('keyup', function (e) {
+            $('.girilen').on('keyup', function (e ) {
                 e.preventDefault();
                 var girilen = $this.find('.girilen').val();
                 console.log('girilen: ' + girilen + ' word:' + tr_word);
