@@ -144,8 +144,8 @@ def word_exercise(id):
     return render_template('word/word_exercise.html', value=value)
 
 
-@login_required
 @app.route('/word_create', methods=['POST', 'GET'])
+@login_required
 def word_create():
     count = db.session.query(WordsModel).filter_by().count()
     if request.args.get('create'):
@@ -158,10 +158,9 @@ def word_create():
             word_name: {
                 "eng_word": eng_value,
                 "turk_word": tr_value,
-            },
-            "unit": unit
+            }
         }
-        write_json(json_data)
+        #write_json(json_data)
         wm = WordsModel(json_data=json_data, unit=unit)
         db.session.add(wm)
         db.session.commit()

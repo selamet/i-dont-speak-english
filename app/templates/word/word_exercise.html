@@ -5,6 +5,8 @@
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script type="text/javascript" rel="script">
         var a = JSON.parse('{{ value|tojson|safe }}');
+        console.log(a);
+
 
         function change_value(a) {
             const keys = Object.keys(a);
@@ -17,25 +19,26 @@
         $(document).ready(function () {
 
             var working_type = $('input[name=options]:checked').val();
-            console.log(working_type);
             var true_count = 0;
             var false_count = 0;
             var value = change_value(a);
+            console.log(value);
             $this = $(this);
             var word = value.eng_word;
             var tr_word = value.turk_word;
+            console.log(word);
             $this.find('#value').html(word);
             $('.tebrikler ').hide();
 
+            var filterDay = $('#eng_tr input:radio:checked').val();
+
 
             $('.girilen').on('keyup', function (e) {
-                e.preventDefault();
-                var girilen = $this.find('.girilen').val();
-                console.log('girilen: ' + girilen + ' word:' + tr_word);
-                if (tr_word.includes(girilen.toLowerCase())) {
-                    $('.tebrikler').show();
-                    var delayInMilliseconds = 1000;
-                    setTimeout(function () {
+                    e.preventDefault();
+                    var girilen = $this.find('.girilen').val();
+                    if (tr_word.includes(girilen.toLowerCase())) {
+                        $('.tebrikler').show();
+
                         true_count++;
                         $('.dogru_bilinen').append(word + ' -> ' + tr_word + '</br>');
                         $('.true_count').html(true_count);
@@ -44,10 +47,13 @@
                         word = new_word.eng_word;
                         tr_word = new_word.turk_word;
                         $('.girilen').val('');
-                        $('.tebrikler ').hide();
-                    }, delayInMilliseconds);
+                        var delayInMilliseconds = 1000;
+                        setTimeout(function () {
+                            $('.tebrikler ').hide();
+                        }, delayInMilliseconds);
+                    }
                 }
-            });
+            );
 
 
             $('.skip').on('click', function (e) {
@@ -65,10 +71,6 @@
                 }, delayInMilliseconds);
             });
 
-            $("#eng_tr").change(function () {
-                console.log('saü');
-            });
-
 
         });
     </script>
@@ -82,16 +84,18 @@
 
     <div class="col-12">
 
+
         <div style="margin-top: 20px;" class="row h-100 justify-content-center align-items-center">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
                 <label class="btn btn-info active">
                     <input type="radio" name="options" id="eng_tr" value="eng_tr" autocomplete="off" checked> Eng-Tr
                 </label>
                 <label class="btn btn-info">
                     <input type="radio" name="options" class="tr_eng" value="tr_eng" autocomplete="off"> Tr-Eng
                 </label>
-
             </div>
+
 
         </div>
 
