@@ -5,8 +5,6 @@
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script type="text/javascript" rel="script">
         var a = JSON.parse('{{ value|tojson|safe }}');
-        console.log(a);
-
 
         function change_value(a) {
             const keys = Object.keys(a);
@@ -19,34 +17,87 @@
         $(document).ready(function () {
 
             var working_type = $('input[name=options]:checked').val();
+            var question_type = 'karisik_sor';
             var true_count = 0;
             var false_count = 0;
             var value = change_value(a);
-            console.log(value);
+            var question = null;
+            var q_answer = null;
             $this = $(this);
-            var word = value.eng_word;
-            var tr_word = value.turk_word;
-            console.log(word);
-            $this.find('#value').html(word);
+            if (working_type == 'eng_tr') {
+                question = value.eng_word;
+                q_answer = value.turk_word;
+            } else {
+                question = value.turk_word;
+                q_answer = value.eng_word;
+            }
+
+            console.log(question, q_answer);
+
+            $this.find('#value').html(question);
             $('.tebrikler ').hide();
 
-            var filterDay = $('#eng_tr input:radio:checked').val();
+            $('#languageForm input').on('change', function () {
+                working_type = $('input[name=options]:checked', '#languageForm').val();
+                if (working_type == 'tr_eng') {
+                    $('.eng-tr-label').removeClass("active");
+                    $(".tr-eng-label").addClass("active");
+                    if (working_type == 'eng_tr') {
+                        question = value.eng_word;
+                        q_answer = value.turk_word;
+                    } else {
+                        question = value.turk_word;
+                        q_answer = value.eng_word;
+                    }
+                    $this.find('#value').html(question);
+                } else {
+                    $('.tr-eng-label').removeClass("active");
+                    $(".eng-tr-label").addClass("active");
+                    if (working_type == 'eng_tr') {
+                        question = value.eng_word;
+                        q_answer = value.turk_word;
+                    } else {
+                        question = value.turk_word;
+                        q_answer = value.eng_word;
+                    }
+                    $this.find('#value').html(question);
+
+                }
+            });
+
+            $('#questionTypeForm input').on('change', function () {
+                question_type = $('input[name=options]:checked', '#questionTypeForm').val();
+                if (question_type == 'karisik_sor') {
+                    $('.sirayla_sor_label').removeClass("active");
+                    $(".karisik_sor_label").addClass("active");
+                } else {
+                    $('.karisik_sor_label').removeClass("active");
+                    $(".sirayla_sor_label").addClass("active");
+                }
+            });
 
 
-            $('.girilen').on('keyup', function (e) {
+            $('.answer').on('keyup', function (e) {
                     e.preventDefault();
-                    var girilen = $this.find('.girilen').val();
-                    if (tr_word.includes(girilen.toLowerCase())) {
+                    console.log(q_answer);
+                    var answer = $this.find('.answer').val();
+                    if (q_answer.includes(answer.toLowerCase())) {
                         $('.tebrikler').show();
-
                         true_count++;
-                        $('.dogru_bilinen').append(word + ' -> ' + tr_word + '</br>');
+                        $('.dogru_bilinen').append(question + ' -> ' + q_answer + '</br>');
                         $('.true_count').html(true_count);
-                        var new_word = change_value(a);
-                        $this.find('#value').html(new_word.eng_word);
-                        word = new_word.eng_word;
-                        tr_word = new_word.turk_word;
-                        $('.girilen').val('');
+                         value = change_value(a);
+                        if (working_type == 'eng_tr') {
+                            question = value.eng_word;
+                            q_answer = value.turk_word;
+                            $this.find('#value').html(value.eng_word);
+
+                        } else {
+                            question = value.turk_word;
+                            q_answer = value.eng_word;
+                            $this.find('#value').html(value.tr_word);
+                        }
+                        $('.answer').val('');
                         var delayInMilliseconds = 1000;
                         setTimeout(function () {
                             $('.tebrikler ').hide();
@@ -58,16 +109,20 @@
 
             $('.skip').on('click', function (e) {
                 e.preventDefault();
+
+                $('.yanlis_bilinen').append(question + ' -> ' + q_answer + '</br>');
+                false_count++;
+                $('.false_count').html(false_count);
+                var value = change_value(a);
+                $this.find('#value').html(value.eng_word);
+
+                question = value.eng_word;
+                q_answer = value.turk_word;
+
+                $('.answer').val('');
                 var delayInMilliseconds = 1000;
                 setTimeout(function () {
-                    $('.yanlis_bilinen').append(word + ' -> ' + tr_word + '</br>');
-                    false_count++;
-                    $('.false_count').html(false_count);
-                    var new_word = change_value(a);
-                    $this.find('#value').html(new_word.eng_word);
-                    word = new_word.eng_word;
-                    tr_word = new_word.turk_word;
-                    $('.girilen').val('');
+                    //kelime gösterilecek
                 }, delayInMilliseconds);
             });
 
@@ -85,18 +140,33 @@
     <div class="col-12">
 
 
-        <div style="margin-top: 20px;" class="row h-100 justify-content-center align-items-center">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <div style="margin-top: 20px;" class=" row h-100 justify-content-center align-items-center">
+            <div class="btn-group">
+                <form id="languageForm">
+                    <label class="btn btn-info eng-tr-label active">
+                        <input type="radio" name="options" id="eng_tr" value="eng_tr" autocomplete="off" checked> Eng-Tr
+                    </label>
+                    <label class="btn btn-info tr-eng-label">
+                        <input type="radio" name="options" class="tr_eng" value="tr_eng" autocomplete="off"> Tr-Eng
+                    </label>
 
-                <label class="btn btn-info active">
-                    <input type="radio" name="options" id="eng_tr" value="eng_tr" autocomplete="off" checked> Eng-Tr
-                </label>
-                <label class="btn btn-info">
-                    <input type="radio" name="options" class="tr_eng" value="tr_eng" autocomplete="off"> Tr-Eng
-                </label>
+                </form>
             </div>
 
 
+        </div>
+        <div style="margin-top: 5px;" class="row h-100 justify-content-center align-items-center">
+            <form id="questionTypeForm">
+                <label class="btn btn-info karisik_sor_label active">
+                    <input type="radio" name="options" id="karisik_sor" value="karisik_sor" autocomplete="off" checked>
+                    Karışık Sor
+                </label>
+                <label class="btn btn-info sirayla_sor_label">
+                    <input type="radio" name="options" id="sirayla_sor" value="sirayla_sor" autocomplete="off"> Sırayla
+                    Sor
+                </label>
+
+            </form>
         </div>
 
 
@@ -107,7 +177,7 @@
 
         </div>
         <div style="margin-top:50px;" class=" col-lg-8 offset-lg-2 ">
-            <input placeholder="..." class="col-lg-12 girilen form-control " type="text">
+            <input placeholder="..." class="col-lg-12 answer form-control " type="text">
             <button style="margin-top:30px;" class="skip btn btn-info btn-block  col-lg-10 offset-lg-1"> Skip</button>
         </div>
 
