@@ -7,42 +7,51 @@
 
 
         $(document).ready(function () {
-            var input_count = 1;
-            $('.add_form').on('click', function (e) {
+            var input_count_tr = 1;
+            var input_count_eng = 1;
+            $('.add_form_tr').on('click', function (e) {
                 e.preventDefault();
                 input = ' <input style="margin-top:10px; margin-bottom:10px;", class="trk_input form-control float-left col-lg-11" type="text">\n';
-                $('.new_input').append(input);
-
-                input_count++;
+                $('.new_tr_input').append(input);
+                input_count_tr++;
+            });
+            $('.add_form_eng').on('click', function (e) {
+                e.preventDefault();
+                input = ' <input style="margin-top:10px; margin-bottom:10px;", class="eng_input form-control float-left col-lg-11" type="text">\n';
+                $('.new_eng_input').append(input);
+                input_count_eng++;
             });
 
             $('.send_button').on('click', function (e) {
                 e.preventDefault();
-                var eng_value = $('.eng_word').val();
-                var arr = $('.trk_input').map((i, e) => e.value).get();
-                if (arr.includes('')) {
-                    for (i = 0; i < arr.length; i++)
-                        if (arr[i] == '')
-                            arr.splice(i, input_count);
+                var tr_arr = $('.trk_input').map((i, e) => e.value).get();
+                var eng_arr = $('.eng_input').map((i, e) => e.value).get();
+                if (tr_arr.includes('')) {
+                    for (i = 0; i < tr_arr.length; i++)
+                        if (tr_arr[i] == '')
+                            tr_arr.splice(i, input_count_tr);
+                }
+                if (eng_arr.includes('')) {
+                    for (i = 0; i < eng_arr.length; i++)
+                        if (eng_arr[i] == '')
+                            eng_arr.splice(i, input_count_eng);
                 }
 
                 var unit = $('.unit').val();
-                if (eng_value == "" || arr == '' || unit == '') {
+                if (eng_arr == "" || tr_arr == '' || unit == '') {
                     alert('Tüm boşlukları doldurmalısnız !!! ');
                 } else {
                     var create = 1;
-                    console.log(unit);
-                    console.log(arr, eng_value);
                     $.ajax({
                         url: '/word_create',
                         data: {
-                            'tr_value': arr.toString(),
-                            'eng_value': eng_value,
+                            'tr_value': tr_arr.toString(),
+                            'eng_value': eng_arr.toString(),
                             'unit': unit,
                             'create': create,
                         },
                         success: function (data) {
-                            var txt = eng_value + ' Başarı ile eklendi';
+                            var txt = eng_arr + ' Başarı ile eklendi';
                             $('.success_status').html(txt);
                             $('.eng_word').val('');
                             $('.trk_input').val('');
@@ -65,14 +74,17 @@
 
         <h3 class="page-header">Word Create Page</h3>
         {{ render_field(form.unit,class="form-control unit" ) }}
-
-        {{ render_field(form.eng_word,class="form-control eng_word" ) }}
+        <div class="english_word">
+            {{ render_field(form.eng_word,class="eng_input form-control eng_word float-left col-lg-11",style="margin-top:8px; margin-right:10px;" ) }}
+            <span class="add_form_eng btn btn-success">+ </span>
+        </div>
+        <div class="new_eng_input"></div>
         <div class="turkish_word">
             {{ render_field(form.trk_word,class="trk_input form-control float-left col-lg-11",style="margin-top:8px; margin-right:10px;") }}
-            <span class="add_form btn btn-success">+ </span>
+            <span class="add_form_tr btn btn-success">+ </span>
         </div>
 
-        <div class="new_input">
+        <div class="new_tr_input">
 
         </div>
 
