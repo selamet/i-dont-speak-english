@@ -9,6 +9,7 @@ from app import app, db
 
 from create_json_file import write_json
 
+
 @app.route('/')
 def home():
     return render_template("base.html")
@@ -152,6 +153,7 @@ def word_create():
         eng_value = tr_to_eng(request.args.get('eng_value'))
         tr_value = request.args.get('tr_value')
         tr_value = [word.lower() for word in tr_value.split(',')]
+        eng_value = [word.lower() for word in eng_value.split(',')]
         word_name = 'word_' + str(count + 1)
         unit = request.args.get('unit')
         json_data = {
@@ -160,7 +162,7 @@ def word_create():
                 "turk_word": tr_value,
             }
         }
-        #write_json(json_data)
+        # write_json(json_data)
         wm = WordsModel(json_data=json_data, unit=unit)
         db.session.add(wm)
         db.session.commit()
