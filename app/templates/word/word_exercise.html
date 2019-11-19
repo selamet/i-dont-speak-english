@@ -5,16 +5,25 @@
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script type="text/javascript" rel="script">
         var a = JSON.parse('{{ value|tojson|safe }}');
+        var question_type = 'karisik_sor';
+        var word_number = 0;
 
         function change_value(a) {
+            var key = '';
             const keys = Object.keys(a);
-            const randIndex = Math.floor(Math.random() * keys.length);
-            const randKey = keys[randIndex];
-            const name = a[randKey];
+            if (question_type == "karisik_sor") {
+                const randIndex = Math.floor(Math.random() * keys.length);
+                key = keys[randIndex];
+            } else {
+                key = keys[word_number];
+                word_number++;
+                if (word_number >= keys.length)
+                    word_number = 0;
+            }
+            const name = a[key];
             return name
         }
 
-        var question_type = 'karisik_sor';
         var true_count = 0;
         var false_count = 0;
         var question = '';
@@ -27,7 +36,6 @@
             } else {
                 question = value.turk_word;
                 q_answer = value.eng_word;
-
             }
             if (question.length > 1) {
                 var show_question = question[0];
@@ -37,9 +45,7 @@
                 $this.find('#value').html(show_question);
             } else {
                 $this.find('#value').html(question);
-
             }
-
         }
 
         $(document).ready(function () {
@@ -78,7 +84,6 @@
 
             $('.answer').on('keyup', function (e) {
                     e.preventDefault();
-                    console.log(q_answer);
                     var answer = $this.find('.answer').val();
                     if (q_answer.includes(answer.toLowerCase())) {
                         $('.tebrikler').show();
