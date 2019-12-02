@@ -17,7 +17,6 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="//cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
 
 
     <title>Document</title>
@@ -30,17 +29,10 @@
     {% include "include/messages.html" %}
 
 {% endblock %}
-<div class="row">
-    <div class="col-lg-12">
-        <div class="col-lg-8 offset-lg-2">
-            {% block icerik %}
 
+{% block icerik %}
 
-            {% endblock %}
-
-        </div>
-    </div>
-</div>
+{% endblock %}
 
 
 </body>

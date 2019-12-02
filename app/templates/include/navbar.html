@@ -1,39 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">I don't Speak English</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/post_list">Dökümanlar <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/add_post" tabindex="-1" aria-disabled="true">Post Oluştur</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/word_exercise_list" tabindex="-1" aria-disabled="true">Kelime Egzersizi</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/word_create" tabindex="-1" aria-disabled="true">Kelime Ekle</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav float-right">
-            {% if session['logged_in'] %}
-                <li class="nav-item">
-                    <a class="nav-link " href="/logout" tabindex="-1">Çıkış Yap</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link " href="/login" tabindex="-1">Giriş Yap</a>
-                </li>
-
-            {% endif %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
 
 
-        </ul>
+<div class="navbarust">
+    <a href='#' class="bize-yazin"> <i class=" fa fa-paper-plane-o" aria-hidden="true"></i>
+        Bize yazın</a>
+</div>
+<div class="navbar col-lg-12 ">
+    <div class="col-lg-12">
+        <img id='navbarimg' class="col-lg-7 center" src="{{ url_for('static',filename='img/i_dont_speak_logo.png') }}"
+             alt="">
 
     </div>
-</nav>
+    <div class="col-lg-12">
+        <div id='menu' class=" col-lg-12 text-center ">
+            <a href="#">Anasayfa</a>
+            <a href="post-detail.html">Dökümanlar</a>
+            <a href="#">Kelime Egzersizi</a>
+        </div>
+    </div>
+</div>

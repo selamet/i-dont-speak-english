@@ -1,5 +1,5 @@
 from xml.sax.saxutils import unescape
-from flask import render_template, request, redirect, url_for, session, flash
+from flask import render_template, request, redirect, url_for, session, flash, Blueprint
 from app.decorators import login_required, is_admin, page_not_found_post, page_not_found_word
 
 from app.forms import LoginForm, PostForm, WordForm
@@ -65,11 +65,12 @@ def add_post():
         return redirect(url_for('home'))
 
 
-@app.route("/post_list")
-def post_list():
-    posts = Posts.query.all()
+@app.route("/post_list/<int:page_num>")
+def post_list(page_num):
+    words = WordsModel.query.all()
+    posts = Posts.query.paginate(per_page=3, page=page_num, error_out=True)
 
-    return render_template('post/post_list.html', posts=posts)
+    return render_template('post/post_list.html', posts=posts, words=words)
 
 
 @app.route("/post/<string:id>")
