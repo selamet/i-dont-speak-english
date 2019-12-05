@@ -9,4 +9,4 @@ flask db migrate
 echo "Start Upgrade"
 flask db upgrade
 
-python wsgi.py 0.0.0.0:5000:5000
+python wsgi.py 127.0.0.1:5000:5000

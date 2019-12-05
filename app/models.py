@@ -9,6 +9,7 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
+    description = db.Column(db.String(120))
     date_posted = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     content = db.Column(db.Text)
     slug = db.Column(db.String(255))

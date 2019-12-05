@@ -12,7 +12,10 @@ from create_json_file import write_json
 
 @app.route('/')
 def home():
-    return render_template("base.html")
+    posts = Posts.query.paginate(per_page=3, page=1, error_out=True)
+    words = WordsModel.query.paginate(per_page=3, page=1, error_out=True)
+
+    return render_template("home.html", posts=posts, words=words)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -52,8 +55,10 @@ def add_post():
                 title = form.title.data
                 content = form.content.data
                 unit = form.unit.data
-                post = Posts(title=title, content=content,
-                             author=User.query.filter_by(username=session['username']).first(), unit=unit)
+                description = form.description.data
+                post = Posts(title=title, description=description, content=content,
+                             author=User.query.filter_by(username=session['username']).first(),
+                             unit=unit)
                 db.session.add(post)
                 db.session.commit()
                 flash('Postunuz başarı ile oluşturuldu', 'success')
