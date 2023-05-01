@@ -3,7 +3,7 @@ cffi==1.13.2
 Click==7.0
 entrypoints==0.3
 flake8==3.7.8
-Flask==1.1.1
+Flask==2.3.2
 Flask-CKEditor==0.4.3
 Flask-Migrate==2.5.2
 flask-paginate==0.5.5
